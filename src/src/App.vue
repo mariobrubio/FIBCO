@@ -1,80 +1,91 @@
 <template>
-  <div id="app">
-      <router-view @vote='register'></router-view>
-  </div>
+  <v-app>
+    <top-nav :menu="menu"/>
+    <v-content>
+      <hero/>
+      <mobile-menu :menu="menu" class="hidden-sm-and-up"/>
+      <painpoint id="poliza"/>
+      <demo id="features"/>
+      <consulting/>
+      <ic-footer id="contact"/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import Web3 from "web3";
-import TruffleContract from "truffle-contract";
-import ContractArtifact from "../../build/contracts/Voting.json";
+import TopNav from '@/components/TopNav'
+import MobileMenu from '@/components/MobileMenu'
+import Hero from '@/components/Hero'
+import Painpoint from '@/components/SectionPainpoint'
+import Demo from '@/components/SectionDemo'
+import Consulting from '@/components/SectionConsulting'
+import Footer from '@/components/SectionFooter'
 
 export default {
-  name: "app",
-  mounted() {
-    // connect the network using web3
-    Web3.providers.HttpProvider.prototype.sendAsync =
-      Web3.providers.HttpProvider.prototype.send;
-    if (this.web3) {
-      this.provider = this.web3.currentProvider;
-    } else {
-      this.provider = new Web3.providers.HttpProvider("http://localhost:8545");
-    }
-    this.web3 = new Web3(this.provider);
-
-    // Initialize a contract
-    this.voteContract = TruffleContract(ContractArtifact);
-    this.voteContract.setProvider(this.provider);
-  },
-  data() {
+  data () {
     return {
-      web3: null,
-      provider: null,
-      voteContract: {}
-    };
-  },
-  methods: {
-    register(candidate) {
-      this.web3.eth.getAccounts((error, accounts) => {
-        console.log(`Try to vote on ${candidate}`);
-
-        if (error) {
-          console.error("Error: ", error);
+      menu: [
+        {
+          name: 'Adquirir Póliza',
+          href: '#poliza'
+        },
+        {
+          name: 'Características',
+          href: '#features'
+        },
+        {
+          name: 'Contáctenos',
+          href: '#contact'
         }
-
-        const account = accounts[0];
-
-        this.voteContract
-          .deployed()
-          .then(instance => {
-            return instance.voteForCandidate(candidate, {
-              from: account,
-              gas: 6721975
-            });
-          })
-          .then(() => {
-            this.$swal({
-              type: "success",
-              title: "Your vote has been recorded on a secure network"
-            });
-          })
-          .catch(err => {
-            if (err.message.search("revert")) {
-              this.$swal({
-                type: "error",
-                title: "Oops",
-                text: "Ayyy! you have already voted"
-              });
-            } else {
-              console.error("Error: ", err);
-            }
-          });
-      });
+      ]
     }
+  },
+  name: 'App',
+  components: {
+    'top-nav': TopNav,
+    'mobile-menu': MobileMenu,
+    'hero': Hero,
+    'painpoint': Painpoint,
+    'consulting': Consulting,
+    'demo': Demo,
+    'ic-footer': Footer
   }
-};
+}
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css?family=Zilla+Slab');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+.brand-logo {
+  font-family: 'Zilla Slab', serif;
+  font-size: 36px!important;
+  font-weight: bold!important;
+  color: #2c3e50;
+}
+.brand-spacer {
+  margin-left: -10px!important;
+}
+.brand-icon {
+  margin-top: -3px;
+}
+.accented-text {
+  font-family: 'Raleway', sans-serif;
+}
+.product-title {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold!important;
+  color: #2c3e50;
+}
+p {
+  font-family: 'Raleway', sans-serif;
+}
+.hero-text-header {
+  font-family: 'Zilla Slab', serif;
+}
+.hero-text-sub {
+  font-family: 'Raleway', sans-serif;
+}
+.brand-text {
+  font-weight: bold;
+}
 </style>

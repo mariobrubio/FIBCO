@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VotePage from '@/components/VotePage'
+import Hero from '@/components/Hero'
 
 Vue.use(Router)
 
@@ -8,8 +8,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'VotePage',
-      component: VotePage
+      name: 'Hero',
+      component: Hero
     }
-  ]
+  ],
+  mode: 'history'
 })
