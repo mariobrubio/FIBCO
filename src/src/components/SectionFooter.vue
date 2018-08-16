@@ -12,19 +12,42 @@
         <strong class="subheading">¡Contáctanos en nuestras redes sociales!</strong>
 
         <v-spacer></v-spacer>
-
-        <v-btn
-          v-for="icon in icons"
-          :key="icon"
-          class="mx-3"
-          dark
-          icon
+        
+        <v-btn class="mx-3"
+               dark
+               icon
+               href="https://github.com/mandresbr/fibco"
         >
-          <v-icon size="24px">{{ icon }}</v-icon>
+          <v-icon size="24px">fab fa-github</v-icon>
         </v-btn>
+
+        <v-btn class="mx-3"
+               dark
+               icon
+               href="#"
+        >
+          <v-icon size="24px">fab fa-twitter</v-icon>
+        </v-btn>
+
+        <v-btn class="mx-3"
+               dark
+               icon
+               href="https://linkedin.com/in/mandresbr"
+        >
+          <v-icon size="24px">fab fa-linkedin</v-icon>
+        </v-btn>
+
+        <v-btn class="mx-3"
+               dark
+               icon
+               href="https://instagram.com/fibcodelays"
+        >
+          <v-icon size="24px">fab fa-instagram</v-icon>
+        </v-btn>
+
       </v-card-title>
 
-      <v-card-actions class="grey darken-3 justify-center">
+      <v-card-actions class="justify-center" color="primary">
         &copy;2018 — <strong>FIBCO</strong>
       </v-card-actions>
     </v-card>
@@ -34,13 +57,7 @@
 <script>
 export default {
   data: () => ({
-      icons: [
-        'fab fa-facebook',
-        'fab fa-twitter',
-        'fab fa-google-plus',
-        'fab fa-linkedin',
-        'fab fa-instagram'
-      ]
+
     })
 }
 </script>

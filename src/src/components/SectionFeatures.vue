@@ -5,16 +5,16 @@
       <v-flex xs12 sm6 md4 lg5 offset-md1>
         <h3 class="display-1 product-title text-xs-center mt-3">¿Por qué FIBCO?</h3>
         <p class="mt-4 demo-text primary--text"><v-icon left class="blue--text text--darken-3 demo-icon">done_all</v-icon> Instantáneo</p>
-        <p>La compensación ante retrasos de vuelos nunca había sido tan fácil. El contrato inteligente de FIBCO compensa al usuario inmediatamente un vuelo se encuentra retrasado.</p>
+        <p>La compensación ante retrasos de vuelos nunca había sido tan fácil. El contrato inteligente de FIBCO compensa al usuario <strong>inmediatamente</strong> un vuelo se encuentra retrasado.</p>
 
         <p class="mt-4 demo-text primary--text"><v-icon left class="blue--text text--darken-3 demo-icon">autorenew</v-icon> Automático</p>
-        <p> Con FIBCO no debes preocuparte por hacer absolutamente nada, el contrato inteligente por si mismo se encarga de realizar la compensación. Dile adiós a los largos procesos de compensación.</p>
+        <p> Con FIBCO no debes preocuparte por hacer absolutamente nada, el contrato inteligente <strong>por si mismo</strong> se encarga de realizar la compensación. Dile adiós a los largos procesos de compensación.</p>
 
         <p class="mt-4 demo-text primary--text"><v-icon left class="blue--text text--darken-3 demo-icon">security</v-icon> Seguro</p>
-        <p>FIBCO está basado en Blockchain, por lo tanto es practicamente inhackeable, dado que la información de cada póliza se encuentra totalmente distribuida y descentralizada.</p>
+        <p>FIBCO está basado en Blockchain, por lo tanto es practicamente <strong>inhackeable</strong>, dado que la información de cada póliza se encuentra totalmente <strong>distribuida</strong> y <strong>descentralizada</strong>.</p>
 
         <p class="mt-4 demo-text primary--text"><v-icon left class="blue--text text--darken-3 demo-icon">attach_money</v-icon> Flexible</p>
-        <p>Recibe compensaciones distintas dependiendo de la póliza que elijas, con distintas tarifas y tiempos de retraso.</p>
+        <p>Recibe compensaciones <strong>distintas</strong> dependiendo de la póliza que elijas, con tarifas justas y tiempos de retraso variables.</p>
 
         <v-divider class="hidden-sm-and-up"></v-divider>
       </v-flex>

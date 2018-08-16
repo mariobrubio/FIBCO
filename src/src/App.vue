@@ -4,8 +4,8 @@
     <v-content>
       <hero/>
       <mobile-menu :menu="menu" class="hidden-sm-and-up"/>
-      <painpoint id="poliza"/>
-      <demo id="features"/>
+      <policy id="poliza"/>
+      <features id="features"/>
       <consulting/>
       <ic-footer id="contact"/>
     </v-content>
@@ -16,8 +16,8 @@
 import TopNav from '@/components/TopNav'
 import MobileMenu from '@/components/MobileMenu'
 import Hero from '@/components/Hero'
-import Painpoint from '@/components/SectionPainpoint'
-import Demo from '@/components/SectionDemo'
+import Policy from '@/components/SectionPolicy'
+import Features from '@/components/SectionFeatures'
 import Consulting from '@/components/SectionConsulting'
 import Footer from '@/components/SectionFooter'
 
@@ -45,9 +45,9 @@ export default {
     'top-nav': TopNav,
     'mobile-menu': MobileMenu,
     'hero': Hero,
-    'painpoint': Painpoint,
+    'policy': Policy,
     'consulting': Consulting,
-    'demo': Demo,
+    'features': Features,
     'ic-footer': Footer
   }
 }

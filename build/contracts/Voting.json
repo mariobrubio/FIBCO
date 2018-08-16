@@ -3370,8 +3370,14 @@
       "links": {},
       "address": "0x370b835495d671fef6e17f4f63d66207359cece2",
       "transactionHash": "0x1f268ad35900a65e0bb4f16ca5bc361bb1d85cac69aefbcfc0a486aa9e930c81"
+    },
+    "1534394290476": {
+      "events": {},
+      "links": {},
+      "address": "0x7260c3683ddd8164dd75c668b2609da5f7367510",
+      "transactionHash": "0x398f1d4d8f06bef7e277c9f228146d5b490e555160a4fde5b6562a2eaeed0987"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-08-12T20:03:47.528Z"
+  "updatedAt": "2018-08-16T04:44:04.960Z"
 }
