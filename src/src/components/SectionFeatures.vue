@@ -25,7 +25,7 @@
             <v-card-media :src="getImgUrl('blockchain2.png')" height=300></v-card-media>
             </v-card>
             </v-card-text>
-            <v-card-title primary class="demo-title white--text"><v-icon x-large>vpn_lock </v-icon>  Blockchain</v-card-title>
+            <v-card-title primary class="demo-title white--text"><v-icon class="mr-2" x-large>vpn_lock </v-icon>  Blockchain</v-card-title>
             <v-card-text class="demo-text">
             <p>Toda póliza adquirida en FIBCO se almacena en una Blockchain</p>
             <p>La información de las pólizas es inmutable, inhackeable. Una forma descentralizada de asegurarte ante un retraso de vuelo.</p>

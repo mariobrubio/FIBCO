@@ -8,7 +8,7 @@
     </v-layout>
 
       <div class="px-2">
-        <form class="mx-2" @submit.stop.prevent="showDialog" >
+        <form class="mx-2"> <!-- @submit.stop.prevent="showDialog" -->
           <v-dialog
             ref="dialog"
             v-model="modal"
@@ -59,30 +59,36 @@
             required
           ></v-checkbox>
 
-          <v-btn @click="submit">buscar</v-btn>
-          <v-btn @click="clear">limpiar</v-btn>
+          <v-btn @click="submit" color="primary" dark>buscar</v-btn>
+          <v-btn @click="clear" color="primary" dark>limpiar</v-btn>
         </form>
         <v-dialog
-            v-model="dialog"
-            width="500"
-          >
+          v-model="dialog"
+          width="500"
+          persistent
+        >
 
-            <v-card>
-              <v-card-title
-                class="headline blue darken-3"
-                primary-title
+          <v-card>
+            <v-card-title primary class="headline white--text justify-center blue darken-3"><v-icon medium class="mr-2 white--text justify-center">file_copy </v-icon> Tu Póliza FIBCO</v-card-title>
+
+            <v-card-text>
+              {{ this.name }}
+              {{ this.date }}
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                flat
+                @click.native="dialog = false"
               >
-                Su Póliza
-              </v-card-title>
-
-              <v-card-text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </v-card-text>
-
-              <v-divider></v-divider>
-
-              
-            </v-card>
+                Cerrar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-dialog>
       </div>
           
@@ -143,7 +149,7 @@
 
     methods: {
       submit () {
-        this.$validator.validateAll()
+        this.$validator.validateAll().then(result => { if (result) {this.dialog = true}})
       },
       clear () {
         this.name = ''
