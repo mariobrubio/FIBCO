@@ -8090,6 +8090,14 @@ vue@^2.5.2:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
 
+vuelidate@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
+
+vuetify@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.1.13.tgz#42bc2a18fd7e3c610358b7a4f54ee3fe748b9676"
+
 watchpack@^1.4.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.5.0.tgz#231e783af830a22f8966f65c4c4bacc814072eed"
