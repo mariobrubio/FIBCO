@@ -8,15 +8,13 @@ ID = "FIBCO"
   base    = "src/"
   # NOTE: This is where we will look for package.json/.nvmrc/etc, not root.
   # This is the directory that you are publishing from (relative to root of your repo)
-  publish = "src/build-output/"
+  publish = "src/dist/"
   # This will be your default build command
   command = "echo 'default context'"
-  # This is where we will look for your lambda functions
-  functions = "src/functions/"
 
 # Production context: All deploys from the Production branch set in your site's deploy settings will inherit these settings.
 [context.production]
-  publish = "output/"
+  publish = "dist/"
   command = "make publish"
   environment = { ACCESS_TOKEN = "super secret", NODE_ENV = "8.0.1" }
 
