@@ -7,8 +7,8 @@
       </v-flex>
     </v-layout>
 
-      <div class="px-5">
-        <form class="mx-5" @submit.stop.prevent="showDialog" >
+      <div class="px-2">
+        <form class="mx-2" @submit.stop.prevent="showDialog" >
           <v-dialog
             ref="dialog"
             v-model="modal"
