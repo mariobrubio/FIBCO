@@ -1,3 +1,7 @@
+=======
+[Settings]
+  ID = "FIBCO"
+
 [build]
   base    = "src"
   publish = "/src/dist"

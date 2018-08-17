@@ -13,6 +13,7 @@
             ref="dialog"
             v-model="modal"
             :return-value.sync="date"
+            data-vv-name="date"
             persistent
             lazy
             full-width
@@ -20,46 +21,47 @@
           >
             <v-text-field
               slot="activator"
-              :error-messages="dateErrors"
-              required
+              :error-messages="errors.collect('date')"
+              v-validate="'required'"
               v-model="date"
-              label="Fecha de salida"
               prepend-icon="event"
-              @input="$v.date.$touch()"
-              @blur="$v.date.$touch()"
+              label="Fecha de salida"
+              data-vv-name="date"
+              required
             ></v-text-field>
             <v-date-picker v-model="date" 
                            locale="es-419" 
-                           
                            @input="$refs.dialog.save(date)"
                            :min="today"                       
                            ></v-date-picker>
 
           </v-dialog>
+          <v-text-field
+            v-validate="'required|max:7'"
+            v-model="name"
+            :counter="7"
+            :error-messages="errors.collect('name')"
+            label="Número de vuelo"
+            prepend-icon="input"
+            data-vv-name="name"
+            required
+          ></v-text-field>
+          
+          
+          <v-checkbox
+            v-validate="'required'"
+            v-model="checkbox"
+            :error-messages="errors.collect('checkbox')"
+            value="1"
+            label="Confirmo que tengo el tiquete con el número de vuelo especificado"
+            data-vv-name="checkbox"
+            type="checkbox"
+            required
+          ></v-checkbox>
 
-            <v-text-field
-              v-model="name"
-              :error-messages="numberErrors"
-              :counter="7"
-              label="Número de vuelo"
-              required
-              prepend-icon="input"
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
-            ></v-text-field>
-            
-            <v-checkbox
-              v-model="checkbox"
-              :error-messages="checkboxErrors"
-              label="Confirmo que tengo el tiquete con el número de vuelo especificado"
-              required
-              @change="$v.checkbox.$touch()"
-              @blur="$v.checkbox.$touch()"
-            ></v-checkbox>
-
-            <v-btn @click="submit" color="primary" dark>Buscar</v-btn>
-            <v-btn @click="clear" color="primary" dark>Limpiar</v-btn>
-          </form>
+          <v-btn @click="submit">buscar</v-btn>
+          <v-btn @click="clear">limpiar</v-btn>
+        </form>
         <v-dialog
             v-model="dialog"
             width="500"
@@ -90,64 +92,66 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import Vue from 'vue'
+  import VeeValidate from 'vee-validate'
+
+  Vue.use(VeeValidate)
 
   export default {
-    mixins: [validationMixin],
-
-    validations: {
-      name: { required, maxLength: maxLength(7) },
-      date: {required},
-      checkbox: { required }
+    $_veeValidate: {
+      validator: 'new'
     },
 
     data: () => ({
       name: '',
-      email: '',
-      date: null,
-      menu: false,
+      date: '',
+      today: new Date().toISOString().substr(0, 10),
+      dialog:false,
       modal: false,
-      dialog: false,
-      menu2: false,
-      checkbox: false,
-      dialog: false,
-      today: new Date().toISOString().substr(0, 10)
+      items: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4'
+      ],
+      checkbox: null,
+      dictionary: {
+        attributes: {
+          date: 'Fecha de salida'
+          // custom attributes
+        },
+        custom: {
+          name: {
+            required: () => 'El número de vuelo no puede estar vacío',
+            max: 'El número de vuelo no puede ser mayor de 7 caracteres'
+            // custom messages
+          },
+          date: {
+            required: () => 'La fecha de salida no puede estar vacía',
+          },
+          checkbox: {
+            required: () => 'Debes aceptar que tienes el tiquete',
+          }
+          
+        }
+      }
     }),
 
-    computed: {
-      checkboxErrors () {
-        const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.required && errors.push('Debes aceptar que los datos son correctos!')
-        return errors
-      },
-      numberErrors () {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('El número de tiquete debe ser de 7 caracteres')
-        !this.$v.name.required && errors.push('Número de tiquete requerido.')
-        return errors
-      },
-      dateErrors () {
-        const errors = []
-        if (!this.$v.date.$dirty) return errors
-        !this.$v.date.required && errors.push('La fecha de salida es requerida')
-        return errors
-      }
+    mounted () {
+      this.$validator.localize('es', this.dictionary)
     },
 
     methods: {
       submit () {
-        this.$v.$touch()
+        this.$validator.validateAll()
       },
       clear () {
-        this.$v.$reset()
         this.name = ''
-        this.email = ''
-        this.date=''
+        this.date = ''
         this.today=''
-        this.checkbox = false
+        this.dialog=''
+        this.checkbox = null
+        this.$validator.reset()
       },
       showDialog (){
         if(this.checkboxErrors.length > 0 || this.numberErrors.length > 0 || this.dateErrors.length > 0) {
