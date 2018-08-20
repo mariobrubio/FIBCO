@@ -1,8 +1,7 @@
 <template>
   
   <v-toolbar app class="white"
-      absolute
-      scroll-off-screen
+      fixed
       scroll-target="#poliza"
     >
     <v-spacer class="hidden-sm-and-up brand-spacer"/>

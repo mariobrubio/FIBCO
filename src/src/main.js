@@ -5,7 +5,11 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import Axios from 'axios';
+import VeeValidate from 'vee-validate'
 
+
+Vue.use(VeeValidate)
 Vue.use(Vuetify, { theme: {
   primary: '#2c3e50',
   secondary: '#00b894',
@@ -16,6 +20,7 @@ Vue.use(Vuetify, { theme: {
   warning: '#FFC107'
 }})
 
+Vue.prototype.$http = Axios;
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

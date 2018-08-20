@@ -6,7 +6,7 @@
       <mobile-menu :menu="menu" class="hidden-sm-and-up"/>
       <policy id="poliza"/>
       <features id="features"/>
-      <consulting/>
+      <consulting id="consulting"/>
       <ic-footer id="contact"/>
     </v-content>
   </v-app>

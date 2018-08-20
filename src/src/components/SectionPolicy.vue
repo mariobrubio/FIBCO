@@ -1,8 +1,10 @@
 <template>
+
   <v-container text-xs-center my-2 >
+      
     <v-layout>
       <v-flex>
-        <h3 class="display-1 product-title mt-1">Adquiere tu póliza</h3>
+        <h3 class="display-1 product-title mt-5">Adquiere tu póliza</h3>
         <p class="mt-3">Ingresa el número y fecha de salida del vuelo que quieres asegurar.</p>
       </v-flex>
     </v-layout>
@@ -40,6 +42,7 @@
             v-validate="'required|max:7'"
             v-model="name"
             :counter="7"
+            mask="NNNNNNN"
             :error-messages="errors.collect('name')"
             label="Número de vuelo"
             prepend-icon="input"
@@ -69,12 +72,31 @@
         >
 
           <v-card>
-            <v-card-title primary class="headline white--text justify-center blue darken-3"><v-icon medium class="mr-2 white--text justify-center">file_copy </v-icon> Tu Póliza FIBCO</v-card-title>
+            <v-card-title primary class="headline white--text justify-center primary"><v-icon medium class="mr-2 white--text justify-center">file_copy </v-icon> Tu Póliza FIBCO</v-card-title>
+            
+            
+            <v-layout row>
+              <v-flex xs4>
+                <v-subheader>Dinero a pagar</v-subheader>
+              </v-flex>
+              <v-flex xs8>
+                <v-text-field
+                  label="COP"
+                  value="20.000"
+                  prefix="$"
+                  mask="######"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
 
             <v-card-text>
               {{ this.name }}
               {{ this.date }}
             </v-card-text>
+
+            <div class="text-xs-center">
+              <v-btn round color="primary" dark href="https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-9d789d9c-e316-4c32-a436-71881575835d">Pagar</v-btn>
+            </div>
 
             <v-divider></v-divider>
 
@@ -98,10 +120,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VeeValidate from 'vee-validate'
-
-  Vue.use(VeeValidate)
 
   export default {
     $_veeValidate: {
