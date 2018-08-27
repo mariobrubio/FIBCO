@@ -38,18 +38,38 @@
                            ></v-date-picker>
 
           </v-dialog>
-          <v-text-field
-            v-validate="'required|max:7'"
-            v-model="name"
-            :counter="7"
-            mask="NNNNNNN"
-            :error-messages="errors.collect('name')"
-            label="Número de vuelo"
-            prepend-icon="input"
-            data-vv-name="name"
-            required
-          ></v-text-field>
-          
+
+          <v-layout row wrap>
+
+          <v-flex xs12 sm6>
+            <v-text-field
+              v-validate="'required|max:3'"
+              v-model="name"
+              :counter="3"
+              mask="AAA"
+              :error-messages="errors.collect('name')"
+              label="Código de aerolínea (Ejemplo: AVA) -> Avianca"
+              prepend-icon="input"
+              data-vv-name="name"
+              required
+            ></v-text-field>
+          </v-flex>
+
+          <v-flex xs12 sm6>
+            <v-text-field
+              v-validate="'required|max:4'"
+              v-model="number"
+              :counter="4"
+              mask="####"
+              :error-messages="errors.collect('number')"
+              label="Número de vuelo (Ejemplo: 9220)"
+              prepend-icon="input"
+              data-vv-name="number"
+              required
+            ></v-text-field>
+          </v-flex>
+
+          </v-layout>          
           
           <v-checkbox
             v-validate="'required'"
@@ -62,13 +82,15 @@
             required
           ></v-checkbox>
 
-          <v-btn @click="submit" color="primary" dark>buscar</v-btn>
+          <v-btn :loading="dialog"
+      :disabled="dialog" @click="submit" color="primary" dark>buscar</v-btn>
           <v-btn @click="clear" color="primary" dark>limpiar</v-btn>
         </form>
         <v-dialog
           v-model="dialog"
           width="500"
           persistent
+          hide-overlay
         >
 
           <v-card>
@@ -82,16 +104,34 @@
               <v-flex xs8>
                 <v-text-field
                   label="COP"
-                  value="20.000"
+                  value="20000"
                   prefix="$"
                   mask="######"
                 ></v-text-field>
               </v-flex>
             </v-layout>
 
+
             <v-card-text>
+            <section v-if="errored">
+              <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+            </section>
+
+            <section v-else>
+              <div v-if="loading">Loading...</div>
+
+              <div
+                v-else
+              >
+                {{this.info}}
+                <div v-if="info==number"> Su vuelo existe </div>
+                <div v-else> El vuelo ingresado no existe</div>
+              </div>
+
+            </section>
               {{ this.name }}
-              {{ this.date }}
+              {{this.number}}
+              {{ this.date.split('-')}}
             </v-card-text>
 
             <div class="text-xs-center">
@@ -120,7 +160,7 @@
 </template>
 
 <script>
-
+  import axios from 'axios';
   export default {
     $_veeValidate: {
       validator: 'new'
@@ -128,16 +168,15 @@
 
     data: () => ({
       name: '',
+      number: '',
+      url: '',
       date: '',
       today: new Date().toISOString().substr(0, 10),
       dialog:false,
       modal: false,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4'
-      ],
+      info: null,     
+      loading: true, 
+      errored: false,
       checkbox: null,
       dictionary: {
         attributes: {
@@ -146,9 +185,11 @@
         },
         custom: {
           name: {
-            required: () => 'El número de vuelo no puede estar vacío',
-            max: 'El número de vuelo no puede ser mayor de 7 caracteres'
+            required: () => 'El código de aerolínea no puede estar vacío',
             // custom messages
+          },
+          number:{
+            required: () => 'El número de vuelo no puede estar vacío'
           },
           date: {
             required: () => 'La fecha de salida no puede estar vacía',
@@ -161,31 +202,41 @@
       }
     }),
 
+
+
     mounted () {
       this.$validator.localize('es', this.dictionary)
     },
 
     methods: {
       submit () {
+        var year = this.date.split('-')[0];
+        var month = this.date.split('-')[1];
+        var day = this.date.split('-')[2];
+      
         this.$validator.validateAll().then(result => { if (result) {this.dialog = true}})
+        this.url = 'https://api.flightstats.com/flex/schedules/rest/v1/json/flight/'+this.name+'/'+this.number+'/departing/'+year+'/'+month+'/'+day+'?appId=c0065ed6&appKey=c5a5abbec571e3aaf0a08c5dfa3bc046';
+        axios
+          .get(this.url)
+          .then(response => {
+            console.log(response)
+            this.info = response.data.scheduledFlights[0].flightNumber
+          })
+          .catch(error => {
+            console.log(error)
+            this.errored = true
+          })
+          .finally(() => this.loading = false)
       },
       clear () {
         this.name = ''
         this.date = ''
+        this.number= ''
         this.today=''
         this.dialog=''
         this.checkbox = null
         this.$validator.reset()
       },
-      showDialog (){
-        if(this.checkboxErrors.length > 0 || this.numberErrors.length > 0 || this.dateErrors.length > 0) {
-        // no hacer nada pues hay algun error en algun campo
-          return 
-        } else {
-          // abrir dialogo pues las rules dicen que esta todo OK
-          this.dialog = true
-        }
-      }
     }
   }
 </script>

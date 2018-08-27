@@ -8,7 +8,6 @@ import 'vuetify/dist/vuetify.min.css'
 import Axios from 'axios';
 import VeeValidate from 'vee-validate'
 
-
 Vue.use(VeeValidate)
 Vue.use(Vuetify, { theme: {
   primary: '#2c3e50',
