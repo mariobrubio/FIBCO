@@ -94,53 +94,79 @@
 
           <v-card>
             <v-card-title primary class="headline white--text justify-center primary"><v-icon medium class="mr-2 white--text justify-center">file_copy </v-icon> Tu Póliza FIBCO</v-card-title>
-            
-            
-            <v-layout row>
-              <v-flex xs4>
-                <v-subheader>Dinero a pagar</v-subheader>
-              </v-flex>
-              <v-flex xs8>
-                <v-text-field
-                  label="COP"
-                  value="20000"
-                  prefix="$"
-                  mask="######"
-                ></v-text-field>
-              </v-flex>
-            </v-layout>
 
 
             <v-card-text>
             <section v-if="errored">
-              <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+              <p>En el momento, no podemos obtener la información de su vuelo. Intente más tarde.</p>
             </section>
 
             <section v-else>
               <div v-if="loading">Loading...</div>
-
+              
               <div
                 v-else
               >
-                {{this.info}}
-                <div v-if="info==number"> Su vuelo existe </div>
-                <div v-else> El vuelo ingresado no existe</div>
+                
+                <div class="text-xs-center" v-if="length>0"> Su vuelo {{this.name}}{{this.number}} de la fecha {{this.date}}  está programado</div>
+                <div class="text-xs-center" v-else> El vuelo ingresado no existe</div>
               </div>
 
             </section>
-              {{ this.name }}
-              {{this.number}}
-              {{ this.date.split('-')}}
-            </v-card-text>
+            <section>
 
-            <div class="text-xs-center">
-              <v-btn round color="primary" dark href="https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-9d789d9c-e316-4c32-a436-71881575835d">Pagar</v-btn>
-            </div>
+                <v-form ref="form" v-model="valid" lazy-validation>
+
+                    <v-layout row>
+                      <v-flex xs4>
+                        <v-subheader>Dinero a pagar</v-subheader>
+                      </v-flex>
+                      <v-flex xs8>
+                        <v-text-field
+                          label="COP"
+                          v-model.number="numberpay"
+                          :rules="numberpayRules"
+                          :counter="6"    
+                          value="20000"
+                          prefix="$"
+                          mask="######"
+                          required
+                        ></v-text-field>
+                      </v-flex>
+                    </v-layout>  
+
+                    Precio a pagar ${{formatPrice(numberpay)}}
+
+                     <v-data-table
+                      :headers="headers"
+                      :items="desserts"
+                      hide-actions
+                      class="elevation-1"
+                    >
+                      <template slot="items" slot-scope="props">
+                        <td class="text-xs-center">{{props.item.time}}</td>
+                        <td class="text-xs-center">${{formatPrice(numberpay*props.item.random)}}</td>
+                      </template>
+                    </v-data-table>
+                      
+                    
+                    
+                  </v-form>
+              
+            </section>
+            </v-card-text>          
 
             <v-divider></v-divider>
 
             <v-card-actions>
               <v-spacer></v-spacer>
+              <v-btn
+                        text-xs-center
+                        :disabled="!valid"
+                        @click="submitpay" color="primary" 
+                      >
+                        Pagar
+                      </v-btn>
               <v-btn
                 color="primary"
                 flat
@@ -164,16 +190,23 @@
     $_veeValidate: {
       validator: 'new'
     },
-
     data: () => ({
       name: '',
       number: '',
+      numberpay: '',
+      valid: true,
+      numberpayRules: [
+        v => !!v || 'El valor a pagar es requerido',
+        v => (v && v<=200000) || 'El valor a pagar máximo es $200.000'
+      ],
       url: '',
       date: '',
       today: new Date().toISOString().substr(0, 10),
       dialog:false,
+      dialog2:false,
       modal: false,
-      info: null,     
+      info:null,
+      length: 0,     
       loading: true, 
       errored: false,
       checkbox: null,
@@ -198,7 +231,33 @@
           }
           
         }
-      }
+      },
+      headers: [
+          {
+            text: 'Demora en minutos',
+            align: 'center',
+            sortable: false,
+            value: 'time'
+          },
+          {
+            text: 'Pago',
+            align: 'center',
+            sortable: false,
+            value: 'pay'
+          }
+        ],
+        desserts: [
+          {
+            time: 60,
+            random: Math.floor(Math.random() * (5 - 1 + 1)) + 2
+            
+          },
+          {
+            time: 120,
+            random: Math.floor(Math.random() * (8 - 1 + 1)) + 5
+            
+          }
+        ]
     }),
 
 
@@ -219,13 +278,32 @@
           .get(this.url)
           .then(response => {
             console.log(response)
-            this.info = response.data.scheduledFlights[0].flightNumber
+            this.length = response.data.scheduledFlights.length
           })
           .catch(error => {
             console.log(error)
             this.errored = true
           })
           .finally(() => this.loading = false)
+      },
+      submitpay () {
+        if (this.$refs.form.validate()) {
+          // Native form submission is not yet supported
+          window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-9d789d9c-e316-4c32-a436-71881575835d"
+          axios.post('/api/submit', {
+            numberpay: this.numberpay
+          })
+        }
+      },
+      formatPrice(value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      },
+      randomNumber1 : function(){
+        return Math.floor(Math.random() * (5 - 1 + 1)) + 2;
+      },
+      randomNumber2 : function(){
+        return Math.floor(Math.random() * (8 - 1 + 1)) + 5;
       },
       clear () {
         this.name = ''
