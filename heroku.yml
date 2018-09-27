@@ -1,5 +1,0 @@
-build:
-  languages:
-    - node
-run:
-  web: node server/src/app.js
