@@ -24,10 +24,8 @@
     "vue-sweetalert2": "^1.2.4",
     "vuelidate": "^0.7.4",
     "vuetify": "^1.1.13",
-    "web3": "^1.0.0-beta.33"
-  },
-  "devDependencies": {
-    "autoprefixer": "^7.1.5",
+    "web3": "^1.0.0-beta.33",
+        "autoprefixer": "^7.1.5",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
@@ -97,6 +95,9 @@
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0"
+  },
+  "devDependencies": {
+
   },
   "engines": {
     "node": ">= 4.0.0",
