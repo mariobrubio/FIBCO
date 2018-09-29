@@ -2,5 +2,5 @@
   ID = "FIBCO"
 
 [build]
-  base    = "client/src"
-  publish = "/client/src/dist"
+  base    = "client"
+  publish = "/client/dist"
