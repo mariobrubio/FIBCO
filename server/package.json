@@ -20,10 +20,11 @@
     "express": "^4.16.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
-    "serve-static": "^1.13.2"
-  },
-  "devDependencies": {
+    "serve-static": "^1.13.2",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0"
+  },
+  "devDependencies": {
+    
   }
 }
