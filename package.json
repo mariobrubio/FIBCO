@@ -9,7 +9,7 @@
     "install-server": "cd ./server && npm install"
   },
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 8.0.0"
   },
   "cacheDirectories": ["client/node_modules", "server/node_modules"]
 }
