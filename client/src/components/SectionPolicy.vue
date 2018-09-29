@@ -340,12 +340,6 @@
         let val = (value/1).toFixed(2).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
       },
-      randomNumber1 : function(){
-        return Math.floor(Math.random() * (5 - 1 + 1)) + 2;
-      },
-      randomNumber2 : function(){
-        return Math.floor(Math.random() * (8 - 1 + 1)) + 5;
-      },
       clear () {
         this.name = ''
         this.date = ''
