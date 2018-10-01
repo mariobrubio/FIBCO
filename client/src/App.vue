@@ -8,7 +8,6 @@
       <features id="features"/>
       <consulting id="consulting"/>
       <ic-footer id="contact"/>
-      <posts/>
     </v-content>
   </v-app>
 </template>

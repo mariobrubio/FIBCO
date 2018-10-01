@@ -136,7 +136,7 @@
 
                      <v-data-table
                       :headers="headers"
-                      :items="payoutInfo"
+                      :items="posts"
                       hide-actions
                       class="elevation-1"
                     >
@@ -352,6 +352,7 @@
       async getPosts () {
       const response = await PostsService.fetchPosts()
       this.posts = response.data
+      console.log(this.posts)
       }
     }
   }
