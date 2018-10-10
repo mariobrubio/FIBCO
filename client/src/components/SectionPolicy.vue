@@ -118,7 +118,7 @@
                       <v-flex xs4>
                         <v-subheader>Dinero a pagar</v-subheader>
                       </v-flex>
-                      <v-flex xs8>
+                      <!-- <v-flex xs8>
                         <v-text-field
                           label="COP"
                           v-model.number="numberpay"
@@ -129,9 +129,19 @@
                           mask="######"
                           required
                         ></v-text-field>
+                      </v-flex> -->
+                      <v-flex xs8>
+                        <v-select
+                          v-model="numberpay"
+                          :items="items"
+                          item-text="text"
+                          item-value="value"
+                          label="Seleccionar Valor"                  
+                          required
+                          single-line
+                        ></v-select>
                       </v-flex>
                     </v-layout>  
-
                     Precio a pagar ${{formatPrice(numberpay)}}
 
                      <v-data-table
@@ -162,7 +172,7 @@
                       <v-flex xs4>
                         <v-subheader>Dinero a pagar</v-subheader>
                       </v-flex>
-                      <v-flex xs8>
+                      <!-- <v-flex xs8>
                         <v-text-field
                           label="COP"
                           v-model.number="numberpay"
@@ -173,7 +183,19 @@
                           mask="######"
                           required
                         ></v-text-field>
+                      </v-flex> -->
+                      <v-flex xs8>
+                        <v-select
+                          v-model="numberpay"
+                          :items="items"
+                          item-text="text"
+                          item-value="value"
+                          label="Seleccionar Valor"
+                          required
+                          single-line
+                        ></v-select>
                       </v-flex>
+
                     </v-layout>  
 
                     Precio a pagar ${{formatPrice(numberpay)}}
@@ -209,13 +231,15 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn
-                        text-xs-center
-                        :disabled="!valid"
-                        @click="submitpay" color="primary" 
-                      >
-                        Pagar
-                      </v-btn>
+
+                <v-btn
+                          text-xs-center
+                          :disabled="!valid"
+                          @click="submitpay(numberpay)" color="primary" 
+                        >
+                          Pagar
+                </v-btn>
+
               <v-btn
                 color="primary"
                 flat
@@ -297,7 +321,14 @@
             sortable: false,
             value: 'pay'
           }
-        ]
+        ],
+      items: [
+      { text: '$10.000', value: 10000},
+      { text: '$20.000', value: 20000},
+      { text: '$50.000', value: 50000},
+      { text: '$100.000', value: 100000},
+      { text: '$150.000', value: 150000}
+    ],
     }),
 
 
@@ -327,14 +358,23 @@
           })
           .finally(() => this.loading = false)
       },
-      submitpay () {
+      submitpay (numberpayout) {
         if (this.$refs.form.validate()) {
-          // Native form submission is not yet supported
-          window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-9d789d9c-e316-4c32-a436-71881575835d"
-          axios.post('/api/submit', {
-            numberpay: this.numberpay
-          })
-        }
+          console.log(numberpayout)
+          if (numberpayout=='10000'){
+            window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-8b190980-7260-4575-9f5c-872e824a5bc0"
+          }
+          if (numberpayout=='20000'){
+            window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-9d789d9c-e316-4c32-a436-71881575835d"
+          }if (numberpayout=='50000'){
+            window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-eae31aae-21fb-476f-a81e-7e9c0fe0ae2e"
+          }if (numberpayout=='100000'){
+            window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-b4191948-78fc-44ab-9ff4-bd2650c62911"
+          }if (numberpayout=='150000'){
+            console.log("Hola mundo")
+            window.location.href = "https://www.mercadopago.com/mco/checkout/start?pref_id=244974715-e1550ed6-d56b-439a-8868-c6418affbab2"
+          }
+        }    
       },
       formatPrice(value) {
         let val = (value/1).toFixed(2).replace('.', ',')
