@@ -345,7 +345,7 @@
         var day = this.date.split('-')[2];
       
         this.$validator.validateAll().then(result => { if (result) {this.dialog = true}})
-        this.url = 'https://powerful-shore-20248.herokuapp.com/https://api.flightstats.com/flex/schedules/rest/v1/json/flight/'+this.name+'/'+this.number+'/departing/'+year+'/'+month+'/'+day+'?appId=9fd2d7c9&appKey=edfb20a6d0337143bcce9b202a333311';
+        this.url = 'https://powerful-shore-20248.herokuapp.com/https://api.flightstats.com/flex/schedules/rest/v1/json/flight/'+this.name+'/'+this.number+'/departing/'+year+'/'+month+'/'+day+'?appId=1c607d2f&appKey=c4ae8d4c325dc9871438aa2dd0967606';
         axios
           .get(this.url)
           .then(response => {
