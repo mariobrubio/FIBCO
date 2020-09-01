@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
-    "buefy": "^0.6.3",
+    "buefy": "^0.7.2",
     "truffle-contract": "^3.0.4",
     "vee-validate": "2.1.0-beta.7",
     "vue": "^2.5.2",
